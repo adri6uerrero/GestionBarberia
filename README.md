@@ -1,4 +1,4 @@
-# Barbería Web - Sistema de Gestión
+# GestionBarberia - Barbería Web
 
 Una aplicación web moderna y elegante para la gestión integral de una barbería, con tema oscuro y diseño intuitivo.
 
