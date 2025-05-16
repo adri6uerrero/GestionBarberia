@@ -1,0 +1,31 @@
+/* Estilos para ocultar explícitamente elementos no deseados */
+button[id*="confirmation"],
+button[id*="confirm"]:not(#floating-confirm-button),
+button#show-confirmation,
+button.btn.btn-primary:not(#to-step-2):not(#to-step-3) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+/* Asegurarse de que el botón flotante sea el único visible */
+#floating-confirm-button.visible {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Verificar que los botones inferiores no tengan botones de confirmación */
+.step-buttons button:not(#back-to-step-1):not(#back-to-step-2):not(#to-step-2):not(#to-step-3) {
+  display: none !important;
+}
+
+/* Para el paso 3, asegurarse de que solo aparezca el botón de "Atrás" */
+.step-content[data-step="3"] .step-buttons button:not(#back-to-step-2) {
+  display: none !important;
+}

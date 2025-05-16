@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Citas - Barbería Profesional</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/auth-user.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    body {
+      background-color: #1a1a1a;
+      color: #fff;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .navbar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .btn {
+      background-color: #9c27b0;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #7b1fa2;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 20px;
+    }
+    
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    nav ul li a:hover {
+      color: #50a8e0;
+    }
+    
+    h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    
+    .page-title {
+      margin-bottom: 30px;
+    }
+    
+    .appointment-card {
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-left: 4px solid #50a8e0;
+    }
+    
+    .appointment-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+    
+    .appointment-card.new {
+      border-left: 4px solid #4CAF50;
+      animation: highlight 2s ease-in-out;
+    }
+    
+    @keyframes highlight {
+      0% { background-color: rgba(76, 175, 80, 0.3); }
+      100% { background-color: #2a2a2a; }
+    }
+    
+    .appointment-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    
+    .appointment-date {
+      font-weight: 600;
+      font-size: 18px;
+    }
+    
+    .appointment-status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .status-confirmed {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    .status-pending {
+      background-color: #FFC107;
+      color: black;
+    }
+    
+    .appointment-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .appointment-info {
+      display: flex;
+      align-items: center;
+    }
+    
+    .info-label {
+      font-size: 14px;
+      color: #aaa;
+      margin-right: 10px;
+      min-width: 80px;
+    }
+    
+    .info-value {
+      font-weight: 500;
+    }
+    
+    .appointment-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border: none;
+      font-size: 14px;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid #999;
+      color: #fff;
+      margin-right: 10px;
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .btn-danger {
+      background-color: #f44336;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: #d32f2f;
+    }
+    
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 0;
+      text-align: center;
+    }
+    
+    .empty-state-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #666;
+    }
+    
+    .empty-state-text {
+      font-size: 18px;
+      color: #999;
+      margin-bottom: 25px;
+    }
+    
+    .btn-primary {
+      background-color: #50a8e0;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #3b86bb;
+    }
+    
+    .success-message {
+      background-color: rgba(76, 175, 80, 0.1);
+      border-left: 4px solid #4CAF50;
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+      display: none;
+    }
+    
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+      .appointment-details {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="index.html" class="logo">Barbería Web</a>
+      <div class="navbar">
+        <div class="nav-links">
+          <a href="index.html">Inicio</a>
+          <a href="servicios.html">Servicios</a>
+          <a href="reservar.html">Reservar</a>
+          <a href="mis-citas.html" class="active">Mis Citas</a>
+        </div>
+        <button class="btn btn-login" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+      </div>
+    </header>
+    
+    <div class="page-title">
+      <h1>Mis Citas</h1>
+    </div>
+    
+    <div id="success-message" class="success-message">
+      ¡Cita reservada con éxito! La confirmación ha sido enviada a tu correo electrónico.
+    </div>
+    
+    <div id="appointments-container">
+      <!-- Las citas se generarán dinámicamente con JavaScript -->
+    </div>
+    
+    <div id="empty-state" class="empty-state" style="display: none;">
+      <div class="empty-state-icon">📅</div>
+      <div class="empty-state-text">No tienes citas programadas</div>
+      <a href="reservar.html" class="btn btn-primary">Reservar una cita</a>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 Barbería Profesional. Todos los derechos reservados.</p>
+  </footer>
+  
+  <script>
+    // Simular una base de datos de citas
+    let appointments = [
+      {
+        id: 1,
+        date: '20 Mayo 2025',
+        time: '10:00',
+        barber: 'Carlos',
+        service: 'Corte de Pelo',
+        status: 'confirmed'
+      },
+      {
+        id: 2,
+        date: '28 Mayo 2025',
+        time: '16:30',
+        barber: 'Manuel',
+        service: 'Corte + Barba',
+        status: 'pending'
+      }
+    ];
+    
+    // Función para obtener parámetros de la URL
+    function getUrlParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const pairs = queryString.split('&');
+      
+      for (const pair of pairs) {
+        const [key, value] = pair.split('=');
+        if (key && value) {
+          params[decodeURIComponent(key)] = decodeURIComponent(value);
+        }
+      }
+      
+      return params;
+    }
+    
+    // Comprobar si hay una nueva cita en los parámetros de URL
+    const urlParams = getUrlParams();
+    if (urlParams.nueva === 'true') {
+      // Mostrar mensaje de éxito
+      const successMessage = document.getElementById('success-message');
+      successMessage.style.display = 'block';
+      
+      // Añadir la nueva cita
+      const newAppointment = {
+        id: appointments.length + 1,
+        date: urlParams.fecha || 'Fecha no especificada',
+        time: urlParams.hora || 'Hora no especificada',
+        barber: urlParams.barbero || 'Barbero no especificado',
+        service: urlParams.servicio || 'Servicio no especificado',
+        status: 'confirmed',
+        isNew: true
+      };
+      
+      appointments.unshift(newAppointment);
+    }
+    
+    // Renderizar las citas
+    function renderAppointments() {
+      const container = document.getElementById('appointments-container');
+      const emptyState = document.getElementById('empty-state');
+      
+      if (appointments.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'flex';
+        return;
+      }
+      
+      emptyState.style.display = 'none';
+      container.innerHTML = appointments.map(appointment => `
+        <div class="appointment-card ${appointment.isNew ? 'new' : ''}">
+          <div class="appointment-header">
+            <div class="appointment-date">${appointment.date}</div>
+            <div class="appointment-status status-${appointment.status}">
+              ${appointment.status === 'confirmed' ? 'Confirmada' : 'Pendiente'}
+            </div>
+          </div>
+          <div class="appointment-details">
+            <div class="appointment-info">
+              <div class="info-label">Hora:</div>
+              <div class="info-value">${appointment.time}</div>
+            </div>
+            <div class="appointment-info">
+              <div class="info-label">Barbero:</div>
+              <div class="info-value">${appointment.barber}</div>
+            </div>
+            <div class="appointment-info">
+              <div class="info-label">Servicio:</div>
+              <div class="info-value">${appointment.service}</div>
+            </div>
+          </div>
+          <div class="appointment-actions">
+            <button class="btn btn-outline" onclick="rescheduleAppointment(${appointment.id})">Reprogramar</button>
+            <button class="btn btn-danger" onclick="cancelAppointment(${appointment.id})">Cancelar</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // Funciones para gestionar las citas
+    function rescheduleAppointment(id) {
+      alert(`Función para reprogramar cita ${id} (simulada)`);
+    }
+    
+    function cancelAppointment(id) {
+      if (confirm('¿Estás seguro de que deseas cancelar esta cita?')) {
+        appointments = appointments.filter(appointment => appointment.id !== id);
+        renderAppointments();
+        alert('Cita cancelada con éxito.');
+      }
+    }
+    
+    // Renderizar las citas al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      renderAppointments();
+      
+      // Verificar si el usuario está autenticado al cargar la página
+      const usuarioActual = localStorage.getItem('currentUser');
+      if (!usuarioActual) {
+        // Redirigir a login si no hay usuario autenticado
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+  
+  <!-- Script de autenticación -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

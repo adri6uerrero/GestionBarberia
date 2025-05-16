@@ -1,0 +1,83 @@
+/* Estilos para el menú de usuario autenticado */
+.nav-usuario {
+  position: relative;
+  margin-left: 15px;
+}
+
+.usuario-dropdown {
+  cursor: pointer;
+  position: relative;
+}
+
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.usuario-info:hover {
+  background-color: #333;
+}
+
+.usuario-avatar {
+  width: 30px;
+  height: 30px;
+  background-color: #9c27b0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.usuario-nombre {
+  color: white;
+  font-weight: 500;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #1e1e1e;
+  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  z-index: 1000;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #333;
+}
+
+.usuario-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .nav-usuario {
+    margin-left: 10px;
+  }
+  
+  .usuario-nombre {
+    display: none;
+  }
+  
+  .dropdown-content {
+    right: -10px;
+  }
+}

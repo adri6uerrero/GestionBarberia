@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barbería Web - Vista Previa</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/auth-user.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background-color: #1a1a1a;
+      padding: 16px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+    
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .nav-links a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: #9c27b0;
+    }
+    
+    .btn {
+      background-color: #9c27b0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #7b1fa2;
+    }
+    
+    .hero {
+      background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1599351431613-18ef1fdd27e1?auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 50px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+    
+    .hero-content {
+      max-width: 600px;
+      padding: 0 20px;
+    }
+    
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+    
+    .services {
+      margin-bottom: 50px;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 32px;
+      font-weight: 500;
+    }
+    
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .service-card {
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.4);
+    }
+    
+    .service-image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .service-content {
+      padding: 20px;
+    }
+    
+    .service-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #9c27b0;
+    }
+    
+    footer {
+      background-color: #1a1a1a;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 50px;
+    }
+    
+    .footer-text {
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <a href="#" class="logo">Barbería Web</a>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="reservar.html">Reservar</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <button class="btn btn-login" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+    </div>
+  </header>
+  
+  <div class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Estilo y Precisión</h1>
+        <p>Tu barbería de confianza. Reserva tu cita online y luce tu mejor versión.</p>
+        <button class="btn" onclick="window.location.href='reservar.html'" style="font-size: 1.2rem; font-weight: bold; padding: 15px 30px; background-color: #f50057; text-transform: uppercase; animation: pulse 2s infinite; box-shadow: 0 0 20px rgba(245, 0, 87, 0.5);">¡¡¡RESERVA TU CITA YA!!!</button>
+        <style>
+          @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+          }
+        </style>
+      </div>
+    </section>
+    
+    <section class="services" id="servicios">
+      <h2 class="section-title">Nuestros Servicios</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=500&q=80')"></div>
+          <div class="service-content">
+            <h3 class="service-title">Corte de Pelo</h3>
+            <p>Corte profesional adaptado a tu estilo y preferencias.</p>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1580518337843-f959e992563b?auto=format&fit=crop&w=500&q=80')"></div>
+          <div class="service-content">
+            <h3 class="service-title">Afeitado de Barba</h3>
+            <p>Afeitado clásico con toalla caliente y productos premium.</p>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=500&q=80')"></div>
+          <div class="service-content">
+            <h3 class="service-title">Perfilado de Cejas</h3>
+            <p>Define y perfila tus cejas con precisión y estilo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section id="contacto" style="padding: 50px 0; background-color: #1e1e1e; margin-top: 50px;">
+    <div class="container">
+      <h2 class="section-title">Contacto</h2>
+      <div style="display: flex; gap: 30px; flex-wrap: wrap; margin-top: 30px;">
+        <div style="flex: 1; min-width: 300px;">
+          <h3 style="margin-bottom: 20px; color: #9c27b0;">Información de Contacto</h3>
+          <p style="margin-bottom: 15px;"><strong>Dirección:</strong> Calle Principal 123, Ciudad</p>
+          <p style="margin-bottom: 15px;"><strong>Teléfono:</strong> +34 123 456 789</p>
+          <p style="margin-bottom: 15px;"><strong>Email:</strong> info@barberiaweb.com</p>
+          <p style="margin-bottom: 15px;"><strong>Horario:</strong><br>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 9:00 - 14:00</p>
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+          <h3 style="margin-bottom: 20px; color: #9c27b0;">Envíanos un Mensaje</h3>
+          <form style="display: flex; flex-direction: column; gap: 15px;">
+            <input type="text" placeholder="Nombre" style="padding: 12px; background-color: #333; border: none; border-radius: 5px; color: white;">
+            <input type="email" placeholder="Email" style="padding: 12px; background-color: #333; border: none; border-radius: 5px; color: white;">
+            <textarea placeholder="Mensaje" rows="5" style="padding: 12px; background-color: #333; border: none; border-radius: 5px; color: white; resize: vertical;"></textarea>
+            <button type="button" class="btn" style="align-self: flex-start;">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <p class="footer-text">© 2025 Barbería Web - Todos los derechos reservados</p>
+    <p class="footer-text" style="margin-top: 10px;">
+      <a href="admin-dashboard.html" style="color: #666; text-decoration: none; font-size: 12px;">Acceso Administrador</a>
+    </p>
+  </footer>
+  
+  <!-- Script de autenticación -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

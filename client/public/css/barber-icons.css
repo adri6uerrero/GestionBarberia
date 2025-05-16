@@ -1,0 +1,70 @@
+/* Estilos específicos para las tarjetas de barbero con iconos */
+.barber-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333 !important;
+  background-image: none !important;
+  padding: 20px;
+}
+
+.barber-img img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  filter: invert(1); /* Hace que los iconos negros se vean blancos */
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.barber-card:hover .barber-img img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.barber-card.selected .barber-img {
+  background-color: #4a148c !important;
+}
+
+.barber-details {
+  text-align: center;
+  padding: 20px;
+}
+
+.barber-name {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.barber-specialty {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #9c27b0;
+}
+
+.barber-experience {
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Ajustes para el estilo cuando está seleccionado */
+.barber-card.selected .barber-name {
+  color: #fff;
+}
+
+.barber-card.selected .barber-specialty {
+  color: #ce93d8;
+}
+
+/* Elimina el indicador circular porque no se ve bien con el icono */
+.barber-card::before {
+  display: none;
+}
+
+/* Ajusta el renderizado del grid de barberos */
+.barber-grid {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}

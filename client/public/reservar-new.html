@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar Cita - Barbería Web</title>
+  
+  <!-- Fuentes y estilos externos -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Estilos CSS modularizados -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/steps.css">
+  <link rel="stylesheet" href="css/services.css">
+  <link rel="stylesheet" href="css/barbers.css">
+  <link rel="stylesheet" href="css/datetime.css">
+  <link rel="stylesheet" href="css/floating-button.css">
+</head>
+<body>
+  <!-- Cabecera -->
+  <header class="header">
+    <div class="navbar">
+      <a href="index.html" class="logo">Barbería Web</a>
+      <nav>
+        <a href="servicios.html">Servicios</a>
+        <a href="reservar.html" class="active">Reservar</a>
+        <a href="mis-citas.html">Mis Citas</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <div class="container">
+    <div class="reservation-card">
+      <!-- Indicador de pasos -->
+      <div class="step-indicator">
+        <div class="step active" data-step="1">
+          <div class="step-number">1</div>
+          <div class="step-title">Servicios</div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="step-number">2</div>
+          <div class="step-title">Barbero</div>
+        </div>
+        <div class="step" data-step="3">
+          <div class="step-number">3</div>
+          <div class="step-title">Fecha y Hora</div>
+        </div>
+      </div>
+      
+      <!-- Paso 1: Selección de servicio -->
+      <div class="step-content active" data-step="1">
+        <h2>Elige un servicio</h2>
+        <div class="service-grid" id="service-grid">
+          <!-- Los servicios se cargarán dinámicamente desde JavaScript -->
+        </div>
+        <div class="step-buttons">
+          <button class="btn btn-primary" id="to-step-2" disabled>Continuar</button>
+        </div>
+      </div>
+      
+      <!-- Paso 2: Selección de barbero -->
+      <div class="step-content" data-step="2">
+        <h2>Elige tu barbero</h2>
+        <div class="barber-grid" id="barber-grid">
+          <!-- Los barberos se cargarán dinámicamente desde JavaScript -->
+        </div>
+        <div class="step-buttons">
+          <button class="btn" id="back-to-step-1">Atrás</button>
+          <button class="btn btn-primary" id="to-step-3" disabled>Continuar</button>
+        </div>
+      </div>
+      
+      <!-- Paso 3: Selección de fecha y hora -->
+      <div class="step-content" data-step="3">
+        <h2>Selecciona fecha y hora</h2>
+        <div class="date-time-grid">
+          <div class="calendar">
+            <div class="calendar-header">
+              <div class="calendar-month" data-year="2025" data-month="4">Mayo 2025</div>
+              <div class="calendar-nav">
+                <button class="calendar-nav-btn">❮</button>
+                <button class="calendar-nav-btn">❯</button>
+              </div>
+            </div>
+            <div class="calendar-grid">
+              <div class="calendar-day-name">L</div>
+              <div class="calendar-day-name">M</div>
+              <div class="calendar-day-name">X</div>
+              <div class="calendar-day-name">J</div>
+              <div class="calendar-day-name">V</div>
+              <div class="calendar-day-name">S</div>
+              <div class="calendar-day-name">D</div>
+              <!-- Los días se cargarán dinámicamente -->
+            </div>
+          </div>
+          
+          <div class="time-slots">
+            <div class="time-slots-title">Horarios Disponibles</div>
+            <div class="time-slots-grid">
+              <div class="time-slot">09:00</div>
+              <div class="time-slot">09:30</div>
+              <div class="time-slot">10:00</div>
+              <div class="time-slot">10:30</div>
+              <div class="time-slot">11:00</div>
+              <div class="time-slot">11:30</div>
+              <div class="time-slot">12:00</div>
+              <div class="time-slot">12:30</div>
+              <div class="time-slot">13:00</div>
+              <div class="time-slot">16:00</div>
+              <div class="time-slot">16:30</div>
+              <div class="time-slot">17:00</div>
+              <div class="time-slot">17:30</div>
+              <div class="time-slot">18:00</div>
+              <div class="time-slot">18:30</div>
+              <div class="time-slot">19:00</div>
+              <div class="time-slot">19:30</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="step-buttons">
+          <button class="btn" id="back-to-step-2">Atrás</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Botón flotante de confirmación -->
+  <button id="floating-confirm-button" class="floating-confirm-button">CONFIRMAR CITA</button>
+  
+  <!-- Scripts JavaScript modularizados -->
+  <script src="js/services.js"></script>
+  <script src="js/barbers.js"></script>
+  <script src="js/datetime.js"></script>
+  <script src="js/steps.js"></script>
+  <script src="js/floating-button.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

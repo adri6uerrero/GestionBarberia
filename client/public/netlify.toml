@@ -1,0 +1,10 @@
+# Configuración de Netlify
+[build]
+  publish = "/"
+  command = ""
+
+# Configuración para SPAs 
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
