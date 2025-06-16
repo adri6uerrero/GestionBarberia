@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuración del puerto
-const PORT = 3005;
+const PORT = process.env.PORT || 3005;
 const ALTERNATIVE_PORT = 3005;
 
 const MIME_TYPES = {
@@ -65,6 +65,7 @@ const startServer = (port) => {
     server.listen(port)
         .on('listening', () => {
             console.log(`✅ Servidor corriendo en http://localhost:${port}/`);
+            console.log('La aplicación está lista para ser desplegada en Railway');
         })
         .on('error', (err) => {
             if (err.code === 'EADDRINUSE') {
