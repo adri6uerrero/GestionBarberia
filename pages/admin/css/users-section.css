@@ -1,0 +1,142 @@
+/* Estilos para la sección de usuarios */
+#users-section .table-container {
+    background-color: var(--dark-bg);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#users-section .admin-table {
+    width: 100%;
+    color: white;
+    border-collapse: collapse;
+}
+
+#users-section .admin-table th {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+#users-section .admin-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #444;
+}
+
+#users-section .admin-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Estilos para los filtros de usuarios */
+.user-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#user-search {
+    background-color: var(--dark-bg);
+    color: white;
+    border: 1px solid #444;
+    padding: 8px 12px;
+    border-radius: 4px;
+    width: 250px;
+}
+
+#search-user-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#time-filter {
+    background-color: var(--dark-bg);
+    color: white;
+    border: 1px solid #444;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Estilos para el modal de historial */
+#user-history-modal .modal-content {
+    background-color: var(--dark-bg);
+    color: white;
+}
+
+.user-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #333;
+}
+
+.stat {
+    min-width: 150px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9em;
+    color: #ccc;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.history-table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #444;
+}
+
+#history-table-body tr.cancelled-appointment {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+#close-history-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#close-history-btn:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.8);
+}
+
+/* Estilos para acciones */
+.btn-action {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.btn-action:hover {
+    color: var(--accent-color);
+}

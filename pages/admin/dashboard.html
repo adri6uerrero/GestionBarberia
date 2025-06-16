@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - BarberWeb</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/calendar-fix.css">
+    <link rel="stylesheet" href="css/users-section.css">
+    <link rel="stylesheet" href="css/products-section.css">
+    <link rel="stylesheet" href="css/services-section.css">
+    <link rel="stylesheet" href="css/barbers-section.css">
+    <link rel="stylesheet" href="css/dashboard-stats.css">
+    <style>
+        /* Estilos específicos para el dashboard */
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--dark-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            position: fixed;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h3 {
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background-color: rgba(128, 128, 128, 0.1);
+            color: var(--accent-color);
+        }
+
+        .sidebar-nav i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-title {
+            color: var(--accent-color);
+        }
+
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Tarjetas del dashboard */
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-card-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .stat-card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-card-icon {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-card-icon i {
+            font-size: 2rem;
+            opacity: 0.7;
+            color: var(--secondary-color);
+        }
+
+        .stat-card-change {
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: #4caf50;
+        }
+
+        .change-negative {
+            color: #f44336;
+        }
+
+        /* Tablas */
+        .table-container {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 12px;
+            background-color: rgba(128, 128, 128, 0.1);
+            font-weight: 500;
+            color: var(--accent-color);
+        }
+
+        .admin-table td {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .admin-table tr:hover {
+            background-color: rgba(128, 128, 128, 0.05);
+        }
+
+        /* Botones y acciones */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            color: #FFC107;
+        }
+
+        .btn-delete {
+            color: #F44336;
+        }
+
+        .btn-view {
+            color: #2196F3;
+        }
+
+        .btn-action:hover {
+            background-color: rgba(128, 128, 128, 0.1);
+        }
+
+        /* Formularios */
+        .form-section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+        }
+        
+        /* Estilos para modales */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal .close {
+            color: var(--text-muted);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal .close:hover {
+            color: var(--accent-color);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilos para formularios en modales */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-secondary {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>BarberWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../services.html">Servicios</a></li>
+                <li><a href="../products.html">Productos</a></li>
+                <li><a href="../appointment.html">Pedir Cita</a></li>
+                <li><a href="../my-appointments.html">Mis Citas</a></li>
+                <li><a href="../login.html" class="btn-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <!-- Barra lateral de navegación -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Panel de Administración</h3>
+                <p id="admin-name">Admin</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="#dashboard-section" class="nav-link active" data-section="dashboard-section"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#appointments-section" class="nav-link" data-section="appointments-section"><i class="far fa-calendar-alt"></i> Citas</a></li>
+                <li><a href="#services-section" class="nav-link" data-section="services-section"><i class="fas fa-cut"></i> Servicios</a></li>
+                <li><a href="#products-section" class="nav-link" data-section="products-section"><i class="fas fa-shopping-bag"></i> Productos</a></li>
+                <li><a href="#barbers-section" class="nav-link" data-section="barbers-section"><i class="fas fa-user-tie"></i> Barberos</a></li>
+                <li><a href="#users-section" class="nav-link" data-section="users-section"><i class="fas fa-users"></i> Usuarios</a></li>
+                <li><a href="#" id="logout-btn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+            </ul>
+        </div>
+
+        <!-- Área de contenido principal -->
+        <div class="content-area">
+            <!-- Sección principal del dashboard -->
+            <div id="dashboard-section" class="dashboard-section active">
+                <div class="admin-header">
+                    <h2 class="admin-title">Dashboard</h2>
+                    <div class="date" id="current-date">16 de junio de 2025</div>
+                </div>
+                
+                <!-- Tarjetas de estadísticas mejoradas -->
+                <div class="stat-cards">
+                    <div class="stat-card">
+                        <div class="stat-card-title">Total Citas</div>
+                        <div class="stat-card-value">19</div>
+                        <div class="stat-card-icon">
+                            <div class="stat-card-change change-positive">+5% mensual</div>
+                            <i class="far fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-card-detail">12 completadas, 7 pendientes</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-card-title">Ingresos Mensuales</div>
+                        <div class="stat-card-value">1.250€</div>
+                        <div class="stat-card-icon">
+                            <div class="stat-card-change change-positive">+8% mensual</div>
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div class="stat-card-detail">850€ servicios, 400€ productos</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-card-title">Clientes Activos</div>
+                        <div class="stat-card-value">42</div>
+                        <div class="stat-card-icon">
+                            <div class="stat-card-change change-positive">+12% mensual</div>
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-card-detail">15 nuevos este mes</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-card-title">Productos Vendidos</div>
+                        <div class="stat-card-value">78</div>
+                        <div class="stat-card-icon">
+                            <div class="stat-card-change change-positive">+5% mensual</div>
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-card-detail">Top: Cera fijadora premium</div>
+                    </div>
+                </div>
+                
+                <!-- Gráficos y estadísticas avanzadas -->
+                <div class="dashboard-charts">
+                    <div class="chart-container">
+                        <div class="admin-header">
+                            <h3 class="admin-title">Rendimiento Mensual</h3>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div class="bar-chart">
+                                <div class="bar" style="height: 60%" data-value="Ene"><span>1.050€</span></div>
+                                <div class="bar" style="height: 75%" data-value="Feb"><span>1.320€</span></div>
+                                <div class="bar" style="height: 45%" data-value="Mar"><span>790€</span></div>
+                                <div class="bar" style="height: 80%" data-value="Abr"><span>1.400€</span></div>
+                                <div class="bar" style="height: 65%" data-value="May"><span>1.140€</span></div>
+                                <div class="bar active" style="height: 71%" data-value="Jun"><span>1.250€</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="admin-header">
+                            <h3 class="admin-title">Servicios Más Populares</h3>
+                        </div>
+                        <div class="service-stats">
+                            <div class="service-stat-item">
+                                <div class="service-name">Corte y Afeitado</div>
+                                <div class="service-progress">
+                                    <div class="progress-bar" style="width: 85%"></div>
+                                </div>
+                                <div class="service-value">85%</div>
+                            </div>
+                            <div class="service-stat-item">
+                                <div class="service-name">Corte Premium</div>
+                                <div class="service-progress">
+                                    <div class="progress-bar" style="width: 65%"></div>
+                                </div>
+                                <div class="service-value">65%</div>
+                            </div>
+                            <div class="service-stat-item">
+                                <div class="service-name">Afeitado Tradicional</div>
+                                <div class="service-progress">
+                                    <div class="progress-bar" style="width: 45%"></div>
+                                </div>
+                                <div class="service-value">45%</div>
+                            </div>
+                            <div class="service-stat-item">
+                                <div class="service-name">Arreglo de Barba</div>
+                                <div class="service-progress">
+                                    <div class="progress-bar" style="width: 40%"></div>
+                                </div>
+                                <div class="service-value">40%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de citas con calendario -->
+            <div id="appointments-section" class="dashboard-section">
+                <div class="admin-header">
+                    <h2 class="admin-title">Calendario de Citas</h2>
+                </div>
+                
+                <div class="calendar-controls">
+                    <div class="month-navigation">
+                        <button id="prev-month" class="btn-icon"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="current-month-display">Junio 2025</h3>
+                        <button id="next-month" class="btn-icon"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="view-controls">
+                        <button id="view-all" class="btn-sm active">Todos los barberos</button>
+                        <select id="barber-filter" class="form-control">
+                            <option value="">Seleccionar barbero</option>
+                            <!-- Las opciones se cargarán dinámicamente -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="admin-calendar" class="admin-calendar">
+                    <!-- Encabezado de días de la semana -->
+                    <div class="calendar-header">
+                        <div class="weekday">Lun</div>
+                        <div class="weekday">Mar</div>
+                        <div class="weekday">Mié</div>
+                        <div class="weekday">Jue</div>
+                        <div class="weekday">Vie</div>
+                        <div class="weekday">Sáb</div>
+                        <div class="weekday">Dom</div>
+                    </div>
+                    
+                    <!-- El grid del calendario se generará dinámicamente -->
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Los días y citas se cargarán dinámicamente -->
+                    </div>
+                </div>
+                
+                <!-- Modal para ver detalles de cita -->
+                <div id="appointment-details-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Detalles de la Cita</h2>
+                        <div id="appointment-details-content">
+                            <!-- Los detalles se cargarán dinámicamente -->
+                        </div>
+                        <div class="form-actions">
+                            <button id="edit-appointment-btn" class="btn">Editar</button>
+                            <button id="cancel-appointment-btn" class="btn btn-danger">Cancelar Cita</button>
+                            <button id="close-details-btn" class="btn btn-secondary">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de servicios -->
+            <div id="services-section" class="dashboard-section">
+                <div class="admin-header">
+                    <h2 class="admin-title">Gestión de Servicios</h2>
+                    <button id="add-service-btn" class="btn"><i class="fas fa-plus"></i> Añadir Servicio</button>
+                </div>
+
+                <!-- Contenedor de la tabla de servicios -->
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Duración</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="services-table-body">
+                            <!-- Se cargará dinámicamente desde el JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal para añadir/editar servicio -->
+                <div id="service-modal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="service-modal-title">Añadir Servicio</h3>
+                            <span class="close">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="service-form">
+                                <input type="hidden" id="service-id">
+                                <div class="form-group">
+                                    <label for="service-name">Nombre del servicio</label>
+                                    <input type="text" id="service-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="service-description">Descripción</label>
+                                    <textarea id="service-description" required></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="service-price">Precio (€)</label>
+                                        <input type="number" id="service-price" min="0" step="0.01" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="service-duration">Duración (min)</label>
+                                        <input type="number" id="service-duration" min="5" step="5" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="service-image">URL de imagen</label>
+                                    <input type="text" id="service-image" required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" id="cancel-service">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de productos -->
+            <div id="products-section" class="dashboard-section">
+                <div class="admin-header">
+                    <h2 class="admin-title">Gestión de Productos</h2>
+                    <button id="add-product-btn" class="btn"><i class="fas fa-plus"></i> Añadir Producto</button>
+                </div>
+
+                <!-- Contenedor de la tabla de productos -->
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Categoría</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <!-- Se cargará dinámicamente desde el JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal para añadir/editar producto -->
+                <div id="product-modal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="product-modal-title">Añadir Producto</h3>
+                            <span class="close">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="product-form">
+                                <input type="hidden" id="product-id">
+                                <div class="form-group">
+                                    <label for="product-name">Nombre del producto</label>
+                                    <input type="text" id="product-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-description">Descripción</label>
+                                    <textarea id="product-description" required></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="product-price">Precio (€)</label>
+                                        <input type="number" id="product-price" min="0" step="0.01" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="product-stock">Stock</label>
+                                        <input type="number" id="product-stock" min="0" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-category">Categoría</label>
+                                    <select id="product-category" required>
+                                        <option value="shampoo">Champú</option>
+                                        <option value="conditioner">Acondicionador</option>
+                                        <option value="styling">Productos de peinado</option>
+                                        <option value="beard">Cuidado de barba</option>
+                                        <option value="skincare">Cuidado facial</option>
+                                        <option value="accessories">Accesorios</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-image">URL de imagen</label>
+                                    <input type="text" id="product-image" required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" id="cancel-product">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de barberos -->
+            <div id="barbers-section" class="dashboard-section">
+                <div class="admin-header">
+                    <h2 class="admin-title">Gestión de Barberos</h2>
+                    <button id="add-barber-btn" class="btn"><i class="fas fa-plus"></i> Añadir Barbero</button>
+                </div>
+
+                <!-- Contenedor de la tabla de barberos -->
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Especialidad</th>
+                                <th>Experiencia</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="barbers-table-body">
+                            <!-- Se cargará dinámicamente desde el JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal para añadir/editar barbero -->
+                <div id="barber-modal" class="modal" style="display:none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="barber-modal-title">Añadir Barbero</h3>
+                            <span class="close">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form id="barber-form">
+                                <input type="hidden" id="barber-id">
+                                <div class="form-group">
+                                    <label for="barber-name">Nombre completo</label>
+                                    <input type="text" id="barber-name" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="barber-specialty">Especialidad</label>
+                                        <input type="text" id="barber-specialty" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="barber-experience">Experiencia (años)</label>
+                                        <input type="number" id="barber-experience" min="0" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="barber-bio">Biografía</label>
+                                    <textarea id="barber-bio" required></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="barber-image">URL de foto</label>
+                                        <input type="text" id="barber-image" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="barber-status">Estado</label>
+                                        <select id="barber-status" required>
+                                            <option value="active">Activo</option>
+                                            <option value="vacation">Vacaciones</option>
+                                            <option value="inactive">Inactivo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" id="cancel-barber">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección de usuarios con servicios recientes -->
+            <div id="users-section" class="dashboard-section">
+                <div class="admin-header">
+                    <h2 class="admin-title">Usuarios con Servicios Recientes</h2>
+                </div>
+                
+                <div class="user-filters">
+                    <div class="search-container">
+                        <input type="text" id="user-search" placeholder="Buscar usuario..." class="form-control">
+                        <button id="search-user-btn" class="btn-icon"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-container">
+                        <select id="time-filter" class="form-control">
+                            <option value="7">Última semana</option>
+                            <option value="30" selected>Último mes</option>
+                            <option value="90">Últimos 3 meses</option>
+                            <option value="all">Todos</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Última Cita</th>
+                                <th>Servicios</th>
+                                <th>Barbero</th>
+                                <th>Total Gastado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Se cargará dinámicamente desde el JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Modal para ver historial de usuario -->
+                <div id="user-history-modal" class="modal">
+                    <div class="modal-content modal-lg">
+                        <span class="close">&times;</span>
+                        <h2>Historial de <span id="user-name-display"></span></h2>
+                        <div class="user-stats">
+                            <div class="stat">
+                                <span class="stat-label">Total de citas:</span>
+                                <span id="total-appointments" class="stat-value">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Total gastado:</span>
+                                <span id="total-spent" class="stat-value">0€</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Barbero preferido:</span>
+                                <span id="favorite-barber" class="stat-value">-</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Servicio más solicitado:</span>
+                                <span id="favorite-service" class="stat-value">-</span>
+                            </div>
+                        </div>
+                        <div class="history-table-container">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Servicio</th>
+                                        <th>Barbero</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="history-table-body">
+                                    <!-- Se cargará dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-actions">
+                            <button id="close-history-btn" class="btn">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/main.js"></script>
+    <script src="js/demo-data.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/fix-navigation.js"></script>
+</body>
+</html>

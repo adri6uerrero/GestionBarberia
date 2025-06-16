@@ -1,0 +1,203 @@
+/* Estilos para la sección de barberos */
+#barbers-section .table-container {
+    background-color: var(--dark-bg);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#barbers-section .admin-table {
+    width: 100%;
+    color: white;
+    border-collapse: collapse;
+}
+
+#barbers-section .admin-table th {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+#barbers-section .admin-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #444;
+}
+
+#barbers-section .admin-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Foto de barbero */
+.barber-image {
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%; /* Forma circular para los barberos */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.barber-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+
+/* Estado del barbero */
+.barber-status {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.status-active {
+    background-color: rgba(0, 128, 0, 0.2);
+    color: #69db7c;
+}
+
+.status-vacation {
+    background-color: rgba(255, 165, 0, 0.2);
+    color: #ffa94d;
+}
+
+.status-inactive {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: #ff6b6b;
+}
+
+/* Experiencia */
+.experience-years {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.experience-years i {
+    color: var(--accent-color);
+}
+
+/* Botones de acción */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-action {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.btn-edit:hover {
+    color: #3498db;
+}
+
+.btn-delete:hover {
+    color: #e74c3c;
+}
+
+.btn-toggle:hover {
+    color: #f39c12;
+}
+
+/* Modal de barbero */
+#barber-modal .modal-content {
+    background-color: var(--dark-bg);
+    color: white;
+}
+
+#barber-modal .modal-header {
+    border-bottom: 1px solid #444;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#barber-modal .form-group {
+    margin-bottom: 15px;
+}
+
+#barber-modal label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+#barber-modal input[type="text"],
+#barber-modal input[type="number"],
+#barber-modal input[type="url"],
+#barber-modal textarea,
+#barber-modal select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: white;
+}
+
+#barber-modal .status-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+#barber-modal .status-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#barber-modal .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#barber-modal .btn-cancel {
+    background-color: transparent;
+    border: 1px solid #666;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#barber-modal .btn-save {
+    background-color: var(--accent-color);
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#barber-modal .btn-save:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.8);
+}
+
+/* Botón para añadir barbero */
+#add-barber-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+#add-barber-btn:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.8);
+}

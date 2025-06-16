@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Citas - BarberWeb</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .my-appointments-container {
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .appointment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .appointment-header h2 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: var(--secondary-color);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .appointments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .appointment-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .appointment-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .appointment-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .appointment-date {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .appointment-detail {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .appointment-detail i {
+            width: 20px;
+            color: var(--secondary-color);
+        }
+
+        .appointment-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .status-pending {
+            background-color: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+        }
+
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .status-cancelled {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .btn-cancel {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background-color: #d32f2f;
+        }
+
+        .btn-reschedule {
+            background-color: var(--accent-color);
+            color: black;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reschedule:hover {
+            background-color: #FB8C00;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .login-required {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .login-required i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .btn-book {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-book:hover {
+            background-color: #7b1fa2;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>BarberWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="services.html">Servicios</a></li>
+                <li><a href="products.html">Productos</a></li>
+                <li><a href="appointment.html">Pedir Cita</a></li>
+                <li><a href="my-appointments.html">Mis Citas</a></li>
+                <li><a href="login.html" class="btn-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="my-appointments-container">
+                <div class="appointment-header">
+                    <h2>Mis Citas</h2>
+                    <p>Gestiona tus citas programadas y revisa el historial</p>
+                </div>
+
+                <!-- Sección que se muestra cuando el usuario no está logueado -->
+                <div id="login-required" class="login-required">
+                    <i class="fas fa-user-lock"></i>
+                    <h3>Inicia sesión para ver tus citas</h3>
+                    <p>Necesitas iniciar sesión para acceder a tus citas programadas y tu historial</p>
+                    <a href="login.html" class="btn-login btn">Iniciar Sesión</a>
+                </div>
+
+                <!-- Contenido para usuarios logueados -->
+                <div id="user-content" style="display: none;">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="upcoming">Próximas Citas</div>
+                        <div class="tab" data-tab="history">Historial</div>
+                    </div>
+
+                    <!-- Pestaña de Citas Próximas -->
+                    <div class="tab-content active" id="upcoming-content">
+                        <div class="appointments-list" id="upcoming-appointments">
+                            <!-- Las citas próximas se cargarán dinámicamente desde JavaScript -->
+                        </div>
+
+                        <!-- Estado vacío para cuando no hay citas próximas -->
+                        <div class="empty-state" id="upcoming-empty" style="display: none;">
+                            <i class="far fa-calendar"></i>
+                            <h3>No tienes citas programadas</h3>
+                            <p>Reserva tu primera cita en nuestra barbería</p>
+                            <a href="appointment.html" class="btn-book">Pedir Cita</a>
+                        </div>
+                    </div>
+
+                    <!-- Pestaña de Historial -->
+                    <div class="tab-content" id="history-content">
+                        <div class="appointments-list" id="history-appointments">
+                            <!-- El historial de citas se cargará dinámicamente desde JavaScript -->
+                        </div>
+
+                        <!-- Estado vacío para cuando no hay historial -->
+                        <div class="empty-state" id="history-empty" style="display: none;">
+                            <i class="fas fa-history"></i>
+                            <h3>Aún no tienes historial de citas</h3>
+                            <p>Tu historial de citas completadas aparecerá aquí</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BarberWeb</h3>
+                    <p>Tu barbería de confianza</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle Principal 123</p>
+                    <p><i class="fas fa-phone"></i> +34 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@barberweb.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 BarberWeb. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="my-appointments.js"></script>
+</body>
+</html>

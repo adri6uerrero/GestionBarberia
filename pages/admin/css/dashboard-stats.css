@@ -1,0 +1,125 @@
+/* Estilos para las estadísticas mejoradas del Dashboard */
+
+/* Detalles adicionales en tarjetas */
+.stat-card-detail {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(128, 128, 128, 0.2);
+}
+
+/* Contenedor de gráficos */
+.dashboard-charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 992px) {
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+.chart-container {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color);
+}
+
+.chart-wrapper {
+    height: 300px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-end;
+}
+
+/* Gráfico de barras */
+.bar-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.bar {
+    flex: 1;
+    background: linear-gradient(to top, #8e44ad, #9b59b6);
+    margin: 0 5px;
+    position: relative;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease;
+    min-height: 20px;
+}
+
+.bar:hover, .bar.active {
+    background: linear-gradient(to top, #6c3483, #8e44ad);
+    transform: scaleY(1.05);
+}
+
+.bar::before {
+    content: attr(data-value);
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.bar span {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Estadísticas de servicios */
+.service-stats {
+    padding: 10px;
+}
+
+.service-stat-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.service-name {
+    width: 30%;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.service-progress {
+    flex-grow: 1;
+    background-color: rgba(128, 128, 128, 0.1);
+    height: 8px;
+    border-radius: 4px;
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, #8e44ad, #9b59b6);
+    border-radius: 4px;
+}
+
+.service-value {
+    width: 40px;
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}

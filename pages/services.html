@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - BarberWeb</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .services-header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/services-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+        }
+
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background-color: #121212; /* Fondo negro */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .service-price {
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .service-duration {
+            color: #aaaaaa;
+            margin-bottom: 15px;
+        }
+
+        .service-description {
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .service-cta {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .service-cta:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>BarberWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="services.html">Servicios</a></li>
+                <li><a href="products.html">Productos</a></li>
+                <li><a href="appointment.html">Pedir Cita</a></li>
+                <li><a href="my-appointments.html">Mis Citas</a></li>
+                <li><a href="login.html" class="btn-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="services-header">
+            <h1>Nuestros Servicios</h1>
+            <p>Ofrecemos una amplia gama de servicios de barbería profesional</p>
+        </div>
+
+        <div class="container">
+            <div class="services-list" id="services-container">
+                <!-- Los servicios se cargarán dinámicamente desde JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BarberWeb</h3>
+                    <p>Tu barbería de confianza</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle Principal 123</p>
+                    <p><i class="fas fa-phone"></i> +34 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@barberweb.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 BarberWeb. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const servicesContainer = document.getElementById('services-container');
+            
+            // Cargar servicios desde localStorage
+            const services = JSON.parse(localStorage.getItem('barberwebServices') || '[]');
+            
+            // Generar tarjetas de servicios
+            services.forEach((service) => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'service-card';
+                
+                serviceCard.innerHTML = `
+                    <div class="service-image" style="background-image: url('${service.imageUrl}')"></div>
+                    <div class="service-content">
+                        <h3 class="service-title">${service.name}</h3>
+                        <p class="service-price">${service.price}€</p>
+                        <p class="service-duration"><i class="far fa-clock"></i> ${service.duration} minutos</p>
+                        <p class="service-description">${service.description}</p>
+                        <a href="appointment.html?service=${service.id}" class="service-cta">Reservar ahora</a>
+                    </div>
+                `;
+                
+                servicesContainer.appendChild(serviceCard);
+            });
+        });
+    </script>
+</body>
+</html>

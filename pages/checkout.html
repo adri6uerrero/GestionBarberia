@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - BarberWeb</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .checkout-header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/products-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+        }
+
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkout-items {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .checkout-item {
+            display: grid;
+            grid-template-columns: 60px 3fr 1fr 1fr 1fr auto;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            gap: 10px;
+        }
+
+        .checkout-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .item-name {
+            font-weight: 500;
+        }
+
+        .item-price {
+            text-align: right;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn {
+            background: var(--secondary-color);
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            margin: 0 5px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .item-total {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .remove-item {
+            color: #ff4d4d;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 1.2rem;
+        }
+
+        .checkout-summary {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .summary-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        .btn-pay {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-color);
+            color: black;
+            border: none;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .checkout-empty {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>BarberWeb</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="services.html">Servicios</a></li>
+                <li><a href="products.html">Productos</a></li>
+                <li><a href="appointment.html">Pedir Cita</a></li>
+                <li><a href="my-appointments.html">Mis Citas</a></li>
+                <li><a href="login.html" class="btn-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="checkout-header">
+            <div class="container">
+                <h1>Checkout</h1>
+                <p>Revisa tu carrito y completa tu compra</p>
+            </div>
+        </section>
+
+        <div class="container" id="checkout-container">
+            <!-- El contenido del checkout se cargará dinámicamente -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BarberWeb</h3>
+                    <p>Tu barbería de confianza</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Calle Principal 123</p>
+                    <p><i class="fas fa-phone"></i> +34 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@barberweb.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 BarberWeb. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkoutContainer = document.getElementById('checkout-container');
+            
+            // Obtener carrito del localStorage
+            const cart = JSON.parse(localStorage.getItem('barberwebCart') || '[]');
+            
+            // Si el carrito está vacío, mostrar mensaje
+            if (cart.length === 0) {
+                checkoutContainer.innerHTML = `
+                    <div class="checkout-empty">
+                        <i class="fas fa-shopping-cart empty-cart-icon"></i>
+                        <h2>Tu carrito está vacío</h2>
+                        <p>No hay productos en tu carrito de compra.</p>
+                        <a href="products.html" class="btn btn-primary">Volver a la Tienda</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Obtener productos completos del localStorage (para tener imágenes y descripciones completas)
+            const products = JSON.parse(localStorage.getItem('barberwebProducts') || '[]');
+            
+            // Crear estructura de checkout
+            const checkoutHTML = `
+                <div class="checkout-container">
+                    <div class="checkout-items">
+                        <h2>Tu Carrito</h2>
+                        <div id="cart-items">
+                            <!-- Los items del carrito se cargarán aquí -->
+                        </div>
+                    </div>
+                    <div class="checkout-summary">
+                        <h2>Resumen</h2>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">0.00€</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>IVA (21%):</span>
+                            <span id="tax">0.00€</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Envío:</span>
+                            <span id="shipping">Gratis</span>
+                        </div>
+                        <div class="summary-row summary-total">
+                            <span>Total:</span>
+                            <span id="total">0.00€</span>
+                        </div>
+                        <button class="btn-pay" id="btn-complete-purchase">
+                            Completar Compra
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            checkoutContainer.innerHTML = checkoutHTML;
+            
+            const cartItemsContainer = document.getElementById('cart-items');
+            const subtotalElement = document.getElementById('subtotal');
+            const taxElement = document.getElementById('tax');
+            const totalElement = document.getElementById('total');
+            const btnCompletePurchase = document.getElementById('btn-complete-purchase');
+            
+            // Función para actualizar el carrito y los totales
+            function updateCart() {
+                // Limpiar el contenedor de items
+                cartItemsContainer.innerHTML = '';
+                
+                let subtotal = 0;
+                
+                // Añadir cada item del carrito
+                cart.forEach(cartItem => {
+                    // Buscar el producto completo para obtener la imagen y descripción
+                    const product = products.find(p => p.id === cartItem.id);
+                    
+                    if (!product) return;
+                    
+                    // Calcular el total por item
+                    const itemTotal = cartItem.price * cartItem.quantity;
+                    subtotal += itemTotal;
+                    
+                    // Crear el elemento HTML para el item
+                    const itemHTML = document.createElement('div');
+                    itemHTML.className = 'checkout-item';
+                    itemHTML.innerHTML = `
+                        <div class="item-image" style="background-image: url('${product.imageUrl}')"></div>
+                        <div class="item-name">${cartItem.name}</div>
+                        <div class="item-price">${cartItem.price.toFixed(2)}€</div>
+                        <div class="item-quantity">
+                            <button class="quantity-btn decrease" data-id="${cartItem.id}">-</button>
+                            <input type="number" class="quantity-input" value="${cartItem.quantity}" min="1" max="10" data-id="${cartItem.id}" readonly>
+                            <button class="quantity-btn increase" data-id="${cartItem.id}">+</button>
+                        </div>
+                        <div class="item-total">${itemTotal.toFixed(2)}€</div>
+                        <button class="remove-item" data-id="${cartItem.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                    
+                    cartItemsContainer.appendChild(itemHTML);
+                });
+                
+                // Actualizar subtotal
+                subtotalElement.textContent = subtotal.toFixed(2) + '€';
+                
+                // Calcular impuestos (21% IVA)
+                const tax = subtotal * 0.21;
+                taxElement.textContent = tax.toFixed(2) + '€';
+                
+                // Actualizar total
+                const total = subtotal + tax;
+                totalElement.textContent = total.toFixed(2) + '€';
+                
+                // Guardar carrito actualizado en localStorage
+                localStorage.setItem('barberwebCart', JSON.stringify(cart));
+            }
+            
+            // Función para actualizar la cantidad de un producto
+            function updateProductQuantity(productId, delta) {
+                const cartIndex = cart.findIndex(item => item.id === productId);
+                if (cartIndex !== -1) {
+                    cart[cartIndex].quantity += delta;
+                    
+                    // Si la cantidad es 0 o menos, eliminar el producto
+                    if (cart[cartIndex].quantity <= 0) {
+                        cart.splice(cartIndex, 1);
+                    }
+                    
+                    updateCart();
+                }
+            }
+            
+            // Evento para eliminar un producto
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.remove-item')) {
+                    const button = e.target.closest('.remove-item');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    const cartIndex = cart.findIndex(item => item.id === productId);
+                    
+                    if (cartIndex !== -1) {
+                        cart.splice(cartIndex, 1);
+                        updateCart();
+                        
+                        // Si el carrito está vacío, recargar la página
+                        if (cart.length === 0) {
+                            window.location.reload();
+                        }
+                    }
+                }
+            });
+            
+            // Eventos para los botones de cantidad
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('decrease')) {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    updateProductQuantity(productId, -1);
+                } else if (e.target.classList.contains('increase')) {
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    updateProductQuantity(productId, 1);
+                }
+            });
+            
+            // Evento para completar la compra
+            btnCompletePurchase.addEventListener('click', function() {
+                if (cart.length > 0) {
+                    alert('¡Gracias por tu compra! Tu pedido ha sido procesado correctamente.');
+                    
+                    // Limpiar el carrito
+                    localStorage.removeItem('barberwebCart');
+                    
+                    // Redirigir a la página de inicio
+                    window.location.href = '../index.html';
+                }
+            });
+            
+            // Inicializar el carrito
+            updateCart();
+        });
+    </script>
+</body>
+</html>

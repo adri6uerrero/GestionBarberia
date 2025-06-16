@@ -1,0 +1,174 @@
+/* Estilos para arreglar el calendario */
+.admin-calendar {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: var(--dark-bg);
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    background-color: #333;
+    padding: 2px;
+}
+
+.calendar-day {
+    background-color: var(--dark-bg);
+    min-height: 100px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    border: 1px solid #444;
+}
+
+.calendar-day.empty {
+    background-color: #222;
+}
+
+.calendar-day.today {
+    background-color: rgba(var(--accent-color-rgb), 0.3);
+    border: 1px solid var(--accent-color);
+}
+
+.day-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.day-appointments {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.calendar-appointment {
+    margin-bottom: 3px;
+    padding: 3px;
+    background-color: rgba(var(--accent-color-rgb), 0.4);
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.85em;
+    color: white;
+}
+
+.calendar-appointment:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.3);
+}
+
+.appointment-time {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.appointment-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointment-client {
+    font-size: 0.8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Estilos para los controles del calendario */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.month-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#current-month-display {
+    min-width: 150px;
+    text-align: center;
+}
+
+.view-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilos para el selector de barberos */
+#barber-filter {
+    background-color: var(--dark-bg);
+    color: white;
+    border: 1px solid #444;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#barber-filter option {
+    background-color: var(--dark-bg);
+    color: white;
+}
+
+#view-all {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#view-all.active {
+    background-color: var(--accent-color);
+    font-weight: bold;
+}
+
+#prev-month, #next-month {
+    background-color: transparent;
+    color: white;
+    border: 1px solid #444;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#prev-month:hover, #next-month:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo para días vacíos */
+.calendar-day.empty {
+    background-color: #222;
+}
+
+/* Asegurar que el calendario tiene suficiente altura */
+#admin-calendar {
+    min-height: 600px;
+}
+
+.weekday {
+    padding: 10px;
+    text-align: center;
+}
